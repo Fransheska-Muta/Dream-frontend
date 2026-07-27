@@ -30,24 +30,23 @@ function Signup ({showLogin}){
 }
  return(
     <>
-    <h1>CREATE YOUR ACCOUNT</h1>
+    <div className="signup-page">
+        <div className="signup-container">
+            <div className="signup-content">
+    <h1>create your account</h1>
 
-    <form onSubmit={handleSignup}>
-      <label htmlFor="name">Name</label>
-      <input type="text" value={name} name="name" onChange={(event)=>setName(event.target.value)}/>
-
-      <label htmlFor="email">Email</label>
-      <input type="email" value={email} name="email" onChange={(event)=>setEmail(event.target.value)}/>
-      
-      <label htmlFor="password">Password</label>
-      <input type="password" value={password} name="password" onChange={(event)=>setPassword(event.target.value)}/>
-      
-      <label htmlFor="confirm">Confirm Password</label>
-      <input type="password" value={confirmPassword} name="confirm" onChange={(event)=>setConfirmPassword(event.target.value)}/>
+    <form onSubmit={handleSignup} className="signup-form">
+      <input type="text" value={name} name="name" onChange={(event)=>setName(event.target.value)} placeholder="Name"/>
+      <input type="email" value={email} name="email" onChange={(event)=>setEmail(event.target.value)} placeholder="Email"/>
+      <input type="password" value={password} name="password" onChange={(event)=>setPassword(event.target.value)} placeholder="Password"/>
+      <input type="password" value={confirmPassword} name="confirm" onChange={(event)=>setConfirmPassword(event.target.value)} placeholder="Confirm Password"/>
       
       <button type="submit"> Sign Up </button>
       <p> Already have an account? <span onClick={showLogin}> Login </span> </p>
     </form>
+    </div>
+    </div>
+    </div>
     </>
  );
 }
