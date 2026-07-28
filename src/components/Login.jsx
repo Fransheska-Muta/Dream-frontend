@@ -31,16 +31,18 @@ function Login({ showSignup }) {
 }
     return (
         <>
+        <div className="login-page">
        <div className="login-container">
-        <h1>LOGIN</h1>
-        <form onSubmit={handleLogin}>
-            <label htmlFor="email">Email</label>
-            <input type="email" value={email} name="email" onChange={(event) => setEmail(event.target.value)} />
-            <label htmlFor="password">Password</label>
-            <input type="password" value={password} name="password" onChange={(event) => setPassword(event.target.value)}/>
-            <button type="submit">Login</button>
-            <p> Don't have an account? <span onClick={showSignup}> Sign Up</span> </p>
+        <h1 className="dream">Dream Journal</h1>
+        {/* <p>Log In </p> */}
+        <form onSubmit={handleLogin} className="login-form">
+            <label> Log In </label>
+            <input className="inputs" type="email" value={email} name="email" onChange={(event) => setEmail(event.target.value)} placeholder="Email" />
+            <input className="inputs" type="password" value={password} name="password" onChange={(event) => setPassword(event.target.value)} Placeholder="Password" />
+            <button className="button" type="submit">Login</button>
+            <p className="paragraph"> Don't have an account? <span className="span" onClick={showSignup}> Sign Up</span> </p>
         </form>
+ </div>
  </div>
     </>
 );

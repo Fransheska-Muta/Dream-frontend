@@ -41,7 +41,7 @@ function Signup ({showLogin}){
       <input type="password" value={password} name="password" onChange={(event)=>setPassword(event.target.value)} placeholder="Password"/>
       <input type="password" value={confirmPassword} name="confirm" onChange={(event)=>setConfirmPassword(event.target.value)} placeholder="Confirm Password"/>
       
-      <button type="submit"> Sign Up </button>
+      <button className="only-button" type="submit"> Sign Up </button>
       <p> Already have an account? <span onClick={showLogin}> Login </span> </p>
     </form>
     </div>
