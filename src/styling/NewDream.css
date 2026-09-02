@@ -1,0 +1,75 @@
+.new-dream-page {
+  min-height: 100vh;
+  padding: 30px 8%;
+}
+
+.new-dream-header h1 {
+  font-size: 24px;
+}
+
+.new-dream-container {
+  max-width: 700px;
+  margin: 60px auto;
+}
+
+.new-dream-container h2 {
+  font-size: 40px;
+  margin-bottom: 40px;
+}
+
+.dream-section,
+.mood-section,
+.interpretation-choice {
+  margin-bottom: 35px;
+}
+
+.dream-section h3,
+.mood-section h3,
+.interpretation-choice h3 {
+  margin-bottom: 15px;
+}
+
+textarea {
+  width: 100%;
+  min-height: 180px;
+
+  padding: 20px;
+
+  font-size: 16px;
+
+  border-radius: 10px;
+
+  resize: vertical;
+}
+
+.mood-options,
+.interpretation-buttons {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.mood-options button,
+.interpretation-buttons button {
+  padding: 12px 20px;
+
+  border-radius: 8px;
+
+  cursor: pointer;
+}
+
+.selected {
+  font-weight: bold;
+}
+
+.save-dream-button {
+  padding: 15px 45px;
+
+  border: none;
+
+  border-radius: 8px;
+
+  font-size: 16px;
+
+  cursor: pointer;
+}

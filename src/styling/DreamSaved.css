@@ -1,0 +1,40 @@
+.dream-saved-page {
+  min-height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 20px;
+}
+
+.dream-saved-container {
+  text-align: center;
+}
+
+.dream-saved-container h1 {
+  font-size: 42px;
+  margin-bottom: 25px;
+}
+
+.dream-saved-container h2 {
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.dream-saved-container p {
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+
+.dream-saved-container button {
+  padding: 14px 30px;
+
+  border: none;
+  border-radius: 8px;
+
+  font-size: 16px;
+
+  cursor: pointer;
+}
