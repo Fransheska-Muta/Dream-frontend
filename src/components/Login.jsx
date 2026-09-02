@@ -1,34 +1,36 @@
 import { useState } from "react";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "../styling/Login.css";
 
 function Login({ showSignup }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-//   const navigate = useNavigate();
+  const navigate = useNavigate();
 
-  const handleLogin = async (event) => {
-    event.preventDefault();
-     try {
-        const credentials = btoa(`${email}:${password}`);
-        const response = await fetch("http://localhost:3000/login", {
-            method: "POST",
-            headers: {
-            Authorization: `Basic ${credentials}`
-    }});
-        const data = await response.json();
-          if (response.ok) {
-           localStorage.setItem("user", JSON.stringify(data)); 
-        alert("Login Successful!");
-            // console.log(data);              
-        } else {
-            alert(data.message);
-        }
-    } catch (error) {
-        console.log(error);
-        alert("Unable to connect to server.");
+const handleLogin = async (event) => {
+  event.preventDefault();
+
+  try {
+    const auth = "Basic " + btoa(`${email}:${password}`);
+    const response = await fetch("http://localhost:3000/login",{
+        method: "POST",
+        headers: {Authorization: auth}
+      }
+    )
+    const data = await response.json();
+    if (response.ok) {
+      sessionStorage.setItem("auth", auth);
+      sessionStorage.setItem("user",JSON.stringify(data.user))
+      alert("Welcome back")
+      navigate("/home");
+    } else {
+      alert(data.message);
     }
-}
+  } catch (error) {
+    console.error(error);
+    alert("Unable to connect to the server.");
+  }
+};
     return (
         <>
         <div className="login-page">
