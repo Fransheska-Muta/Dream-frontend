@@ -17,59 +17,43 @@
   margin-bottom: 40px;
 }
 
-.dream-section,
-.mood-section,
-.interpretation-choice {
-  margin-bottom: 35px;
+.dream-section,.mood-section,.interpretation-choice {
+  margin-bottom: 25px;
 }
 
-.dream-section h3,
-.mood-section h3,
-.interpretation-choice h3 {
+.dream-section h3,.mood-section h3,.interpretation-choice h3 {
   margin-bottom: 15px;
 }
 
 textarea {
   width: 100%;
   min-height: 180px;
-
   padding: 20px;
-
   font-size: 16px;
-
   border-radius: 10px;
-
-  resize: vertical;
 }
 
-.mood-options,
-.interpretation-buttons {
+.mood-options,.interpretation-buttons {
   display: flex;
   gap: 12px;
   flex-wrap: wrap;
 }
 
-.mood-options button,
-.interpretation-buttons button {
+.mood-options button,.interpretation-buttons button {
   padding: 12px 20px;
-
   border-radius: 8px;
-
   cursor: pointer;
 }
 
 .selected {
-  font-weight: bold;
+  /* font-weight: bold; */
+  background-color: pink;
 }
 
 .save-dream-button {
   padding: 15px 45px;
-
   border: none;
-
   border-radius: 8px;
-
   font-size: 16px;
-
   cursor: pointer;
 }
