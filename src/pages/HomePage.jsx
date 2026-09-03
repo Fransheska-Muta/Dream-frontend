@@ -3,10 +3,8 @@ import "../styling/HomePage.css";
 
 function HomePage() {
   const navigate = useNavigate();
-
-  // Get the current hour
+  // getting the time (hour)
   const hour = new Date().getHours();
-
   let greeting;
 
   if (hour < 12) {
@@ -19,36 +17,17 @@ function HomePage() {
 
   return (
     <div className="home-page">
-
-      {/* Logo / App Name */}
       <header className="home-header">
         <h1>Dream Journal</h1>
       </header>
 
-      {/* Main Content */}
       <main className="home-content">
-
         <p className="greeting">{greeting}</p>
-
-        <h2>
-          Every dream holds a
-          <br />
-          message, find out what
-          <br />
-          yours is
-        </h2>
-
-        <button
-          className="record-button"
-          onClick={() => navigate("/new-dream")}
-        >
-          Record a new dream
-        </button>
-
+        <h2>Every dream holds a <br /> message, find out what<br />yours is</h2>
+        <button className="record-button" onClick={() => navigate("/new-dream")}> <span className="plus">+ </span> <br/> Add a new dream </button>
       </main>
-
     </div>
-  );
+  )
 }
 
 export default HomePage
