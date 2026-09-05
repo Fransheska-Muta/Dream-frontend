@@ -9,7 +9,7 @@ function DreamSaved() {
         <h1>Dream saved!</h1>
         <h2>Your dream has been recorded now<br /> getting your interpretation...</h2>
         {/* <p>This may take a few seconds...</p> */}
-        <button onClick={() => navigate("/journal")}>View in Journal</button>
+        <button onClick={() => navigate("/interpretation")}>View Interpretation</button>
       </div>
     </div>
   )
