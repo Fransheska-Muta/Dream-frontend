@@ -4,6 +4,7 @@ import HomePage from "./pages/HomePage";
 import NewDream from "./pages/NewDream";
 import DreamSaved from "./pages/DreamSaved";
 import Interpretation from "./pages/Interpretation";
+import Journal from "./pages/Journal";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/new-dream" element={<NewDream/>} />
         <Route path="/dream-saved" element={<DreamSaved />}/>
         <Route path="/interpretation" element={<Interpretation />}/>
+        <Route path="/journal" element={<Journal />} />
       </Routes>
     </BrowserRouter>
   );

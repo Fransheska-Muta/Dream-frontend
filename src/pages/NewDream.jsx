@@ -9,45 +9,124 @@ function NewDream() {
   const [wantInterpretation, setWantInterpretation] = useState(null);
 
 const handleSave = async () => {
-  // description
   if (!description.trim()) {
     alert("Please write your dream first.");
-    return
-  }
-  // mood
-  if (!mood) {
-    alert("Please select how you felt after waking up.");
-    return
+    return;
   }
 
-  //authentication
+  if (!mood) {
+    alert("Please select how you felt after waking up.");
+    return;
+  }
+
+  if (wantInterpretation === null) {
+    alert("Please choose whether you want an AI interpretation.");
+    return;
+  }
+
   const auth = sessionStorage.getItem("auth");
+
   if (!auth) {
     alert("You are not logged in.");
     navigate("/");
-    return
+    return;
   }
 
   try {
-    const response = await fetch("http://localhost:3000/dreams",{
+    // =========================
+    // 1. SAVE DREAM
+    // =========================
+
+    const dreamResponse = await fetch(
+      "http://localhost:3000/dreams",
+      {
         method: "POST",
+
         headers: {
           "Content-Type": "application/json",
-          Authorization: auth
+          Authorization: auth,
         },
-        body: JSON.stringify({ description, mood, dreamDate: new Date()})
+
+        body: JSON.stringify({
+          description,
+          mood,
+          dreamDate: new Date(),
+        }),
       }
-    )
-    const data = await response.json();
-    if (response.ok) {
-      console.log(data);
-      alert("Dream saved successfully!");
-      navigate("/dream-saved");
-    } else {
-      alert(data.message);
+    );
+
+    const dreamData = await dreamResponse.json();
+
+    if (!dreamResponse.ok) {
+      alert(dreamData.message);
+      return;
     }
+
+    console.log("Dream saved:", dreamData);
+
+
+    // =========================
+    // 2. AI INTERPRETATION
+    // =========================
+
+    if (wantInterpretation === true) {
+
+      const interpretationResponse = await fetch(
+        `http://localhost:3000/interpret/${dreamData.dreamId}`,
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: auth,
+          }
+        }
+      );
+
+      const interpretationData =
+        await interpretationResponse.json();
+
+      if (!interpretationResponse.ok) {
+        alert(interpretationData.message);
+        return;
+      }
+
+      // Save the interpretation temporarily
+      sessionStorage.setItem(
+        "interpretation",
+        interpretationData.interpretation
+      );
+
+      // Save the dream temporarily too
+      sessionStorage.setItem(
+        "dreamDescription",
+        description
+      );
+
+      sessionStorage.setItem(
+        "dreamMood",
+        mood
+      );
+
+        // Save interpretation ID
+  sessionStorage.setItem(
+    "interpretationId",
+    interpretationData.interpretationId
+  );
+
+      navigate("/interpretation");
+
+    } else {
+
+      // User doesn't want AI
+      navigate("/dream-saved");
+
+    }
+
   } catch (error) {
-    console.error(error);
+
+    console.error("Error:", error);
+
     alert("Unable to connect to the server.");
   }
 }

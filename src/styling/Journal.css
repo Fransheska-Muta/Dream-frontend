@@ -1,0 +1,679 @@
+/* ================================
+   JOURNAL PAGE
+================================ */
+
+.journal-page {
+  min-height: 100vh;
+  width: 100%;
+  background: linear-gradient(
+    135deg,
+    #180020 0%,
+    #2c0b3d 45%,
+    #5d2480 100%
+  );
+  color: #f7f1f7;
+  font-family: Georgia, "Times New Roman", serif;
+  box-sizing: border-box;
+}
+
+
+/* ================================
+   HEADER
+================================ */
+
+.journal-header {
+  width: 100%;
+  padding: 58px 0 0 90px;
+  box-sizing: border-box;
+}
+
+.journal-header h1 {
+  margin: 0;
+  color: #ffffff;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+
+/* Hide the header button for now
+   because the New Dream page does
+   not have one in the top-right */
+
+.journal-header button {
+  display: none;
+}
+
+
+/* ================================
+   MAIN JOURNAL CONTAINER
+================================ */
+
+.journal-container {
+  width: 90%;
+  max-width: 900px;
+  margin: 40px auto 80px;
+}
+
+
+/* ================================
+   MY JOURNAL TITLE
+================================ */
+
+.journal-container h2 {
+  color: #ffffff;
+  font-size: 42px;
+  margin: 0 0 28px;
+  font-weight: bold;
+}
+
+
+/* ================================
+   DREAM LIST
+================================ */
+
+.dream-list {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+
+/* ================================
+   DREAM CARD
+================================ */
+
+.dream-card {
+  background: rgba(91, 52, 112, 0.78);
+  border: 1px solid rgba(205, 174, 220, 0.35);
+  border-radius: 15px;
+  padding: 25px 30px;
+  box-sizing: border-box;
+
+  box-shadow:
+    0 8px 25px rgba(0, 0, 0, 0.18);
+
+  transition: 0.2s ease;
+}
+
+.dream-card:hover {
+  background: rgba(101, 59, 124, 0.85);
+  border-color: rgba(220, 192, 232, 0.5);
+}
+
+
+/* ================================
+   DREAM CARD HEADER
+================================ */
+
+.dream-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.dream-card-header h3 {
+  margin: 0;
+  color: #ffffff;
+  font-size: 25px;
+  font-weight: bold;
+}
+
+
+/* ================================
+   MOOD
+================================ */
+
+.dream-mood {
+  border: 1px solid rgba(210, 184, 224, 0.5);
+  background: rgba(104, 69, 123, 0.7);
+  color: #ffffff;
+
+  padding: 8px 15px;
+  border-radius: 7px;
+
+  font-size: 14px;
+  font-weight: bold;
+}
+
+
+/* ================================
+   DATE
+================================ */
+
+.dream-date {
+  margin: 10px 0 18px;
+
+  color: #c9b8ce;
+  font-size: 14px;
+}
+
+
+/* ================================
+   DREAM DESCRIPTION
+================================ */
+
+.dream-description {
+  color: #eee7f0;
+  font-size: 16px;
+  line-height: 1.7;
+
+  margin: 0 0 23px;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+
+/* ================================
+   CARD BUTTON AREA
+================================ */
+
+.dream-card-actions {
+  display: flex;
+  gap: 12px;
+
+  padding-top: 18px;
+
+  border-top: 1px solid rgba(214, 190, 222, 0.25);
+}
+
+
+/* ================================
+   CARD BUTTONS
+================================ */
+
+.dream-card-actions button {
+  border: 1px solid rgba(214, 190, 222, 0.45);
+
+  background: rgba(104, 69, 123, 0.8);
+  color: #ffffff;
+
+  padding: 10px 22px;
+
+  border-radius: 7px;
+
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 14px;
+  font-weight: bold;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.dream-card-actions button:hover {
+  background: #cdb2ff;
+  color: #351342;
+  border-color: #cdb2ff;
+}
+
+
+/* ================================
+   EMPTY JOURNAL
+================================ */
+
+.empty-journal {
+  background: rgba(91, 52, 112, 0.78);
+
+  border: 1px solid rgba(205, 174, 220, 0.35);
+  border-radius: 15px;
+
+  padding: 55px 30px;
+
+  text-align: center;
+
+  box-shadow:
+    0 8px 25px rgba(0, 0, 0, 0.18);
+}
+
+.empty-journal h3 {
+  color: #ffffff;
+  font-size: 25px;
+  margin: 0 0 12px;
+}
+
+.empty-journal p {
+  color: #d3c5d7;
+  font-size: 16px;
+  margin-bottom: 25px;
+}
+
+.empty-journal button {
+  background: #cdb2ff;
+  color: #351342;
+
+  border: none;
+  border-radius: 7px;
+
+  padding: 12px 25px;
+
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: bold;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.empty-journal button:hover {
+  background: #dbc8ff;
+}
+
+
+/* ================================
+   LOADING / ERROR
+================================ */
+
+.journal-container > p {
+  color: #e6dce9;
+  font-size: 16px;
+}
+
+.journal-error {
+  color: #ffd1d1 !important;
+
+  background: rgba(120, 30, 50, 0.35);
+
+  border: 1px solid rgba(255, 180, 190, 0.3);
+  border-radius: 8px;
+
+  padding: 14px 18px;
+}
+
+/* =================================
+   CLICKABLE DREAM CARD
+================================= */
+
+.dream-card {
+  cursor: pointer;
+}
+
+.click-dream {
+  margin: 0;
+  color: #cdb2ff;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+
+/* =================================
+   MODAL OVERLAY
+================================= */
+
+.dream-modal-overlay {
+  position: fixed;
+  inset: 0;
+
+  background: rgba(12, 0, 18, 0.78);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 30px;
+
+  z-index: 1000;
+
+  overflow-y: auto;
+}
+
+
+/* =================================
+   MODAL
+================================= */
+
+.dream-modal {
+  position: relative;
+
+  width: 90%;
+  max-width: 750px;
+
+  max-height: 85vh;
+
+  overflow-y: auto;
+
+  background: linear-gradient(
+    135deg,
+    #351443,
+    #512466
+  );
+
+  border: 1px solid rgba(205, 174, 220, 0.4);
+
+  border-radius: 16px;
+
+  padding: 40px;
+
+  box-sizing: border-box;
+
+  color: #f7f1f7;
+
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.45);
+}
+
+
+/* =================================
+   CLOSE BUTTON
+================================= */
+
+.close-modal {
+  position: absolute;
+
+  top: 15px;
+  right: 18px;
+
+  width: 35px;
+  height: 35px;
+
+  border-radius: 50%;
+
+  border: 1px solid rgba(220, 192, 232, 0.4);
+
+  background: rgba(104, 69, 123, 0.7);
+
+  color: white;
+
+  font-size: 25px;
+
+  line-height: 25px;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.close-modal:hover {
+  background: #cdb2ff;
+  color: #351342;
+}
+
+
+/* =================================
+   MODAL TITLE
+================================= */
+
+.dream-modal h2 {
+  margin: 0;
+
+  padding-right: 40px;
+
+  color: white;
+
+  font-size: 34px;
+
+  line-height: 1.25;
+}
+
+
+/* =================================
+   DATE
+================================= */
+
+.modal-date {
+  color: #c9b8ce;
+
+  font-size: 14px;
+
+  margin: 10px 0 22px;
+}
+
+
+/* =================================
+   MOOD
+================================= */
+
+.modal-mood {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  color: #eee7f0;
+
+  font-size: 15px;
+}
+
+.modal-mood span {
+  background: rgba(104, 69, 123, 0.8);
+
+  border: 1px solid rgba(210, 184, 224, 0.5);
+
+  border-radius: 7px;
+
+  padding: 7px 14px;
+
+  color: white;
+}
+
+
+/* =================================
+   DIVIDER
+================================= */
+
+.modal-divider {
+  height: 1px;
+
+  background: rgba(214, 190, 222, 0.25);
+
+  margin: 28px 0;
+}
+
+
+/* =================================
+   SECTIONS
+================================= */
+
+.modal-section h3 {
+  color: white;
+
+  font-size: 22px;
+
+  margin: 0 0 15px;
+}
+
+
+/* =================================
+   FULL DREAM
+================================= */
+
+.modal-dream-text {
+  color: #eee7f0;
+
+  font-size: 16px;
+
+  line-height: 1.8;
+
+  white-space: pre-wrap;
+}
+
+
+/* =================================
+   INTERPRETATION
+================================= */
+
+.modal-interpretation {
+  color: #eee7f0;
+
+  font-size: 16px;
+
+  line-height: 1.8;
+}
+
+
+/* =================================
+   THEMES / SYMBOLS
+================================= */
+
+.modal-tags {
+  margin-top: 25px;
+}
+
+.modal-tags h4 {
+  color: white;
+
+  margin: 0 0 12px;
+
+  font-size: 16px;
+}
+
+.tags {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 8px;
+}
+
+.tags span {
+  background: rgba(104, 69, 123, 0.8);
+
+  border: 1px solid rgba(210, 184, 224, 0.4);
+
+  color: #eee7f0;
+
+  padding: 7px 12px;
+
+  border-radius: 20px;
+
+  font-size: 13px;
+}
+
+
+/* =================================
+   NO INTERPRETATION
+================================= */
+
+.no-interpretation {
+  margin-top: 25px;
+
+  padding: 15px;
+
+  background: rgba(104, 69, 123, 0.35);
+
+  border-radius: 8px;
+
+  color: #cdbfd1;
+
+  font-size: 14px;
+}
+
+/* =================================
+   MODAL ACTIONS
+================================= */
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+
+  margin-top: 30px;
+  padding-top: 22px;
+
+  border-top: 1px solid rgba(214, 190, 222, 0.25);
+}
+
+
+/* =================================
+   DELETE BUTTON
+================================= */
+
+.delete-dream-button {
+  border: 1px solid rgba(220, 150, 160, 0.5);
+
+  background: rgba(100, 35, 50, 0.45);
+
+  color: #f2cdd2;
+
+  padding: 11px 22px;
+
+  border-radius: 7px;
+
+  font-family: Georgia, "Times New Roman", serif;
+
+  font-size: 14px;
+
+  font-weight: bold;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.delete-dream-button:hover {
+  background: #8d3d50;
+
+  color: white;
+
+  border-color: #c56b7c;
+}
+
+
+/* =================================
+   MOBILE
+================================= */
+
+@media (max-width: 700px) {
+
+  .dream-modal-overlay {
+    padding: 15px;
+  }
+
+  .dream-modal {
+    width: 100%;
+
+    padding: 30px 22px;
+
+    max-height: 90vh;
+  }
+
+  .dream-modal h2 {
+    font-size: 28px;
+  }
+
+  .modal-mood {
+    align-items: flex-start;
+
+    flex-direction: column;
+  }
+}
+
+/* ================================
+   MOBILE
+================================ */
+
+@media (max-width: 700px) {
+
+  .journal-header {
+    padding: 35px 25px 0;
+  }
+
+  .journal-container {
+    width: 88%;
+    margin-top: 35px;
+  }
+
+  .journal-container h2 {
+    font-size: 34px;
+  }
+
+  .dream-card {
+    padding: 22px;
+  }
+
+  .dream-card-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .dream-card-actions {
+    flex-direction: column;
+  }
+
+  .dream-card-actions button {
+    width: 100%;
+  }
+}
