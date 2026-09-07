@@ -1,0 +1,314 @@
+/* =========================
+   ANALYTICS PAGE
+========================= */
+
+.analytics-page {
+  min-height: 100vh;
+
+  background:
+    radial-gradient(
+      circle at top,
+      #4e2774 0%,
+      #2a1a3d 45%,
+      #381c5e 100%
+    );
+
+  color: #eee6f2;
+
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.analytics-header {
+  height: 80px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 60px;
+
+  border-bottom: 1px solid
+    rgba(214, 190, 222, 0.18);
+
+  background: rgba(59, 29, 99, 0.65);
+}
+
+.analytics-header h1 {
+  margin: 0;
+  color: white;
+  font-size: 26px;
+
+  font-weight: normal;
+
+  letter-spacing: 1px;
+}
+
+.back-journal-button {
+  background: transparent;
+
+  border: 1px solid #bba1d6;
+
+  color: #d8cce0;
+
+  padding: 9px 18px;
+
+  border-radius: 6px;
+
+  cursor: pointer;
+
+  font-family: inherit;
+
+  transition: 0.2s ease;
+}
+
+.back-journal-button:hover {
+  background: #8b6fa8;
+
+  color: white;
+}
+
+
+/* =========================
+   CONTAINER
+========================= */
+
+.analytics-container {
+  width: 90%;
+
+  max-width: 1200px;
+
+  margin: 0 auto;
+
+  padding: 55px 0 80px;
+}
+
+.analytics-container h2 {
+  margin-bottom: 8px;
+
+  font-size: 34px;
+
+  font-weight: normal;
+}
+
+.analytics-intro {
+  color: #a99bb1;
+
+  margin-bottom: 35px;
+
+  font-size: 16px;
+}
+
+
+/* =========================
+   SUMMARY CARDS
+========================= */
+
+.analytics-summary {
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, 1fr);
+
+  gap: 18px;
+
+  margin-bottom: 30px;
+}
+
+.analytics-card {
+  background:
+    linear-gradient(
+      145deg,
+      rgba(62, 46, 75, 0.75),
+      rgba(31, 24, 38, 0.9)
+    );
+
+  border: 1px solid
+    rgba(214, 190, 222, 0.16);
+
+  border-radius: 10px;
+
+  padding: 25px;
+
+  min-height: 120px;
+
+  box-shadow:
+    0 10px 30px
+    rgba(0, 0, 0, 0.25);
+}
+
+.analytics-card h3 {
+  margin: 0 0 18px;
+
+  color: #a99bb1;
+
+  font-size: 14px;
+
+  font-weight: normal;
+
+  text-transform: uppercase;
+
+  letter-spacing: 1px;
+}
+
+.analytics-number {
+  margin: 0;
+
+  font-size: 38px;
+
+  color: #eee6f2;
+}
+
+.analytics-highlight {
+  margin: 0;
+
+  font-size: 22px;
+
+  color: #c7a8d8;
+
+  text-transform: capitalize;
+}
+
+
+/* =========================
+   CHARTS
+========================= */
+
+.analytics-charts {
+  display: grid;
+
+  grid-template-columns:
+    1fr 1fr;
+
+  gap: 25px;
+}
+
+.chart-card {
+  background:
+    linear-gradient(
+      145deg,
+      rgba(48, 36, 59, 0.75),
+      rgba(25, 19, 31, 0.9)
+    );
+
+  border: 1px solid
+    rgba(214, 190, 222, 0.16);
+
+  border-radius: 10px;
+
+  padding: 28px;
+
+  min-height: 400px;
+
+  box-shadow:
+    0 10px 30px
+    rgba(0, 0, 0, 0.25);
+}
+
+.chart-card h3 {
+  margin-top: 0;
+
+  margin-bottom: 25px;
+
+  font-size: 19px;
+
+  font-weight: normal;
+}
+
+
+/* =========================
+   CHART CONTAINERS
+========================= */
+
+.pie-chart-container {
+  height: 310px;
+
+  position: relative;
+}
+
+.bar-chart-container {
+  height: 310px;
+
+  position: relative;
+}
+
+.full-chart {
+  grid-column: 1 / -1;
+}
+
+
+/* =========================
+   NO DATA
+========================= */
+
+.no-data {
+  color: #8f8396;
+
+  text-align: center;
+
+  margin-top: 130px;
+}
+
+
+/* =========================
+   ERROR
+========================= */
+
+.analytics-error {
+  color: #d88c98;
+
+  margin-bottom: 20px;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 900px) {
+
+  .analytics-summary {
+    grid-template-columns:
+      repeat(2, 1fr);
+  }
+
+  .analytics-charts {
+    grid-template-columns: 1fr;
+  }
+
+  .full-chart {
+    grid-column: auto;
+  }
+
+}
+
+
+@media (max-width: 600px) {
+
+  .analytics-header {
+    padding: 0 20px;
+  }
+
+  .analytics-container {
+    width: 92%;
+
+    padding-top: 35px;
+  }
+
+  .analytics-container h2 {
+    font-size: 28px;
+  }
+
+  .analytics-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .chart-card {
+    padding: 20px;
+  }
+
+}

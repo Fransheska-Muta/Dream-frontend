@@ -12,12 +12,18 @@ function Journal() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-
   // =========================
   // GET DREAMS
   // =========================
 
-  const fetchDreams = async () => {
+ // =========================
+// LOAD JOURNAL DATA
+// =========================
+
+useEffect(() => {
+  let ignore = false;
+
+  const loadJournal = async () => {
     try {
       const auth = sessionStorage.getItem("auth");
 
@@ -26,74 +32,72 @@ function Journal() {
         return;
       }
 
-      const response = await fetch("http://localhost:3000/dreams", {
-        method: "GET",
-        headers: {
-          Authorization: auth,
-        },
-      });
+      // Get dreams and interpretations at the same time
+      const [dreamsResponse, interpretationsResponse] =
+        await Promise.all([
+          fetch("http://localhost:3000/dreams", {
+            method: "GET",
+            headers: {
+              Authorization: auth,
+            },
+          }),
 
-      const data = await response.json();
+          fetch("http://localhost:3000/interpretations", {
+            method: "GET",
+            headers: {
+              Authorization: auth,
+            },
+          }),
+        ]);
 
-      if (!response.ok) {
-        throw new Error(data.message || "Unable to load dreams");
-      }
+      const dreamsData = await dreamsResponse.json();
+      const interpretationsData =
+        await interpretationsResponse.json();
 
-      setDreams(data);
-
-    } catch (error) {
-      console.error("Error fetching dreams:", error);
-      setError("Unable to load your dreams.");
-
-    } finally {
-      setLoading(false);
-    }
-    fetchDreams();
-  };
-
-  // =========================
-  // GET INTERPRETATIONS
-  // =========================
-
-  const fetchInterpretations = async () => {
-    try {
-      const auth = sessionStorage.getItem("auth");
-
-      if (!auth) return;
-
-      const response = await fetch(
-        "http://localhost:3000/interpretations",
-        {
-          method: "GET",
-          headers: {
-            Authorization: auth,
-          },
-        }
-      );
-
-      const data = await response.json();
-
-      if (!response.ok) {
+      if (!dreamsResponse.ok) {
         throw new Error(
-          data.message || "Unable to load interpretations"
+          dreamsData.message || "Unable to load dreams"
         );
       }
 
-      setInterpretations(data);
+      if (!interpretationsResponse.ok) {
+        throw new Error(
+          interpretationsData.message ||
+            "Unable to load interpretations"
+        );
+      }
+
+      // Prevent state updates if component has been removed
+      if (!ignore) {
+        setDreams(dreamsData);
+        setInterpretations(interpretationsData);
+        setError("");
+      }
 
     } catch (error) {
-      console.error("Error fetching interpretations:", error);
+      console.error(
+        "Error loading journal:",
+        error
+      );
+
+      if (!ignore) {
+        setError("Unable to load your journal.");
+      }
+
+    } finally {
+      if (!ignore) {
+        setLoading(false);
+      }
     }
-    
-    fetchInterpretations()
   };
 
-     useEffect(() => {
-    fetchDreams();
-    fetchInterpretations();
-  }, []);
+  loadJournal();
 
+  return () => {
+    ignore = true;
+  };
 
+}, [navigate]);
   // =========================
   // FIND INTERPRETATION
   // =========================
@@ -124,63 +128,71 @@ function Journal() {
     setSelectedDream(null);
   };
 
+
+  // =========================
+  // DELETE DREAM
+  // =========================
+
   const deleteDream = async (dreamId) => {
-  const confirmed = window.confirm(
-    "Are you sure you want to delete this dream?"
-  );
-
-  if (!confirmed) {
-    return;
-  }
-
-  try {
-    const auth = sessionStorage.getItem("auth");
-
-    const response = await fetch(
-      `http://localhost:3000/dreams/${dreamId}`,
-      {
-        method: "DELETE",
-        headers: {
-          Authorization: auth,
-        },
-      }
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this dream?"
     );
 
-    const data = await response.json();
-
-    if (!response.ok) {
-      throw new Error(
-        data.message || "Unable to delete dream"
-      );
+    if (!confirmed) {
+      return;
     }
 
-    // Remove the dream from the screen
-    setDreams((currentDreams) =>
-      currentDreams.filter(
-        (dream) => dream._id !== dreamId
-      )
-    );
+    try {
+      const auth = sessionStorage.getItem("auth");
 
-    // Remove its interpretation from the screen too
-    setInterpretations((currentInterpretations) =>
-      currentInterpretations.filter(
-        (interpretation) =>
-          interpretation.dreamId !== dreamId &&
-          interpretation.dreamId?.toString() !== dreamId
-      )
-    );
+      const response = await fetch(
+        `http://localhost:3000/dreams/${dreamId}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: auth,
+          },
+        }
+      );
 
-    // Close modal if the deleted dream was open
-    setSelectedDream(null);
+      const data = await response.json();
 
-    alert("Dream deleted successfully.");
+      if (!response.ok) {
+        throw new Error(
+          data.message || "Unable to delete dream"
+        );
+      }
 
-  } catch (error) {
-    console.error("Error deleting dream:", error);
+      // Remove dream from Journal
+      setDreams((currentDreams) =>
+        currentDreams.filter(
+          (dream) => dream._id !== dreamId
+        )
+      );
 
-    alert("Unable to delete dream.");
-  }
-};
+      // Remove connected interpretation
+      setInterpretations((currentInterpretations) =>
+        currentInterpretations.filter(
+          (interpretation) =>
+            interpretation.dreamId !== dreamId &&
+            interpretation.dreamId?.toString() !== dreamId
+        )
+      );
+
+      // Close modal
+      setSelectedDream(null);
+
+      alert("Dream deleted successfully.");
+
+    } catch (error) {
+      console.error(
+        "Error deleting dream:",
+        error
+      );
+
+      alert("Unable to delete dream.");
+    }
+  };
 
 
   return (
@@ -204,10 +216,14 @@ function Journal() {
         <h2>My Journal</h2>
 
 
+        {/* LOADING */}
+
         {loading && (
           <p>Loading your dreams...</p>
         )}
 
+
+        {/* ERROR */}
 
         {error && (
           <p className="journal-error">
@@ -216,21 +232,30 @@ function Journal() {
         )}
 
 
-        {!loading && !error && dreams.length === 0 && (
-          <div className="empty-journal">
+        {/* NO DREAMS */}
 
-            <h3>No dreams recorded yet</h3>
+        {!loading &&
+          !error &&
+          dreams.length === 0 && (
 
-            <p>
-              Your recorded dreams will appear here.
-            </p>
+            <div className="empty-journal">
 
-            <button onClick={() => navigate("/new-dream")}>
-              Record a Dream
-            </button>
+              <h3>No dreams recorded yet</h3>
 
-          </div>
-        )}
+              <p>
+                Your recorded dreams will appear here.
+              </p>
+
+              <button
+                onClick={() =>
+                  navigate("/new-dream")
+                }
+              >
+                Record a Dream
+              </button>
+
+            </div>
+          )}
 
 
         {/* =========================
@@ -303,7 +328,9 @@ function Journal() {
 
           <div
             className="dream-modal"
-            onClick={(event) => event.stopPropagation()}
+            onClick={(event) =>
+              event.stopPropagation()
+            }
           >
 
             {/* CLOSE BUTTON */}
@@ -331,6 +358,7 @@ function Journal() {
             {/* DATE */}
 
             <p className="modal-date">
+
               {new Date(
                 selectedDream.dreamDate
               ).toLocaleDateString(
@@ -341,6 +369,7 @@ function Journal() {
                   year: "numeric",
                 }
               )}
+
             </p>
 
 
@@ -362,7 +391,9 @@ function Journal() {
             <div className="modal-divider"></div>
 
 
-            {/* DREAM */}
+            {/* =========================
+                DREAM
+            ========================= */}
 
             <section className="modal-section">
 
@@ -381,7 +412,9 @@ function Journal() {
                 INTERPRETATION
             ========================= */}
 
-            {getInterpretation(selectedDream._id) && (
+            {getInterpretation(
+              selectedDream._id
+            ) && (
 
               <>
 
@@ -463,17 +496,6 @@ function Journal() {
 
                       </div>
 
-                      <div className="modal-actions">
-
-  <button
-    className="delete-dream-button"
-    onClick={() => deleteDream(selectedDream._id)}
-  >
-    Delete Dream
-  </button>
-
-</div>
-
                     </div>
 
                   )}
@@ -503,6 +525,26 @@ function Journal() {
             )}
 
 
+            {/* =========================
+                DELETE DREAM
+            ========================= */}
+
+            <div className="modal-actions">
+
+              <button
+                className="delete-dream-button"
+                onClick={() =>
+                  deleteDream(
+                    selectedDream._id
+                  )
+                }
+              >
+                Delete Dream
+              </button>
+
+            </div>
+
+
           </div>
 
         </div>
@@ -513,4 +555,4 @@ function Journal() {
   );
 }
 
-export default Journal
+export default Journal;
