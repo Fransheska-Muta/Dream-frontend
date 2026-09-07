@@ -1,36 +1,241 @@
+/* =========================
+   DREAM SAVED PAGE
+========================= */
+
 .dream-saved-page {
   min-height: 100vh;
+  width: 100%;
 
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px;
+
+  padding: 30px;
+
+  box-sizing: border-box;
+
+  color: white;
+
+  background:
+    radial-gradient(
+      circle at top right,
+      rgba(126, 61, 170, 0.45),
+      transparent 40%
+    ),
+    radial-gradient(
+      circle at bottom left,
+      rgba(67, 25, 100, 0.6),
+      transparent 45%
+    ),
+    linear-gradient(
+      135deg,
+      #160021,
+      #35104d,
+      #51127a
+    );
+
+  position: relative;
+
+  overflow: hidden;
 }
+
+
+/* =========================
+   SUBTLE BACKGROUND GLOW
+========================= */
+
+.dream-saved-page::before {
+  content: "";
+
+  position: absolute;
+
+  width: 400px;
+  height: 400px;
+
+  top: -150px;
+  right: -100px;
+
+  background: rgba(209, 192, 255, 0.12);
+
+  border-radius: 50%;
+
+  filter: blur(80px);
+
+  pointer-events: none;
+}
+
+
+/* =========================
+   CONTAINER
+========================= */
 
 .dream-saved-container {
+  position: relative;
+  z-index: 1;
+
+  width: 100%;
+  max-width: 700px;
+
+  padding: 55px 45px;
+
+  box-sizing: border-box;
+
   text-align: center;
+
+  background: rgba(255, 255, 255, 0.08);
+
+  border: 1px solid rgba(255, 255, 255, 0.15);
+
+  border-radius: 20px;
+
+  backdrop-filter: blur(12px);
+
+  -webkit-backdrop-filter: blur(12px);
+
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.25);
 }
+
+
+/* =========================
+   TITLE
+========================= */
 
 .dream-saved-container h1 {
-  font-size: 42px;
-  margin-bottom: 25px;
+  margin: 0 0 25px;
+
+  font-size: clamp(38px, 6vw, 58px);
+
+  line-height: 1.1;
+
+  font-weight: 600;
+
+  color: white;
 }
+
+
+/* =========================
+   MESSAGE
+========================= */
 
 .dream-saved-container h2 {
-  font-size: 24px;
+  margin: 0;
+
+  font-size: clamp(20px, 3vw, 28px);
+
   font-weight: 400;
+
   line-height: 1.5;
+
+  color: white;
 }
+
+
+/* =========================
+   SMALL MESSAGE
+========================= */
 
 .dream-saved-container p {
-  margin-top: 20px;
-  margin-bottom: 30px;
+  margin-top: 25px;
+
+  margin-bottom: 35px;
+
+  font-size: 16px;
+
+  color: rgba(255, 255, 255, 0.7);
 }
 
+
+/* =========================
+   BUTTON
+========================= */
+
 .dream-saved-container button {
-  padding: 14px 30px;
+  padding: 15px 32px;
+
   border: none;
-  border-radius: 8px;
+
+  border-radius: 10px;
+
   font-size: 16px;
+
+  font-weight: 600;
+
+  color: #2b0b3d;
+
+  background-color: rgb(209, 192, 255);
+
   cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+
+.dream-saved-container button:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width: 768px) {
+
+  .dream-saved-page {
+    padding: 25px;
+  }
+
+  .dream-saved-container {
+    padding: 45px 30px;
+  }
+
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 480px) {
+
+  .dream-saved-page {
+    padding: 20px;
+  }
+
+  .dream-saved-container {
+    padding: 40px 20px;
+
+    border-radius: 16px;
+  }
+
+  .dream-saved-container h1 {
+    font-size: 38px;
+
+    margin-bottom: 20px;
+  }
+
+  .dream-saved-container h2 {
+    font-size: 19px;
+
+    line-height: 1.45;
+  }
+
+  .dream-saved-container p {
+    font-size: 14px;
+
+    margin-top: 20px;
+    margin-bottom: 28px;
+  }
+
+  .dream-saved-container button {
+    width: 100%;
+
+    padding: 15px 20px;
+  }
 }
