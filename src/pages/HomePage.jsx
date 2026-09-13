@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import "../styling/HomePage.css";
+import Navbar from "../components/Navbar";
 
 function HomePage() {
   const navigate = useNavigate();
@@ -26,6 +27,7 @@ function HomePage() {
         <h2>Every dream holds a <br /> message, find out what<br />yours is</h2>
         <button className="record-button" onClick={() => navigate("/new-dream")}> <span className="plus">+ </span> <br/> Add a new dream </button>
       </main>
+      <Navbar/>
     </div>
   )
 }

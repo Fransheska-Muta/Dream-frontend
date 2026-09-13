@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import "../styling/interpretation.css";
+import Navbar from "../components/Navbar";
 
 function Interpretation() {
   const navigate = useNavigate();
@@ -32,7 +33,7 @@ function Interpretation() {
           <button onClick={() => navigate("/home")}>Back to Home</button>
         </div>
       </main>
-
+  <Navbar />
     </div>
   )
 }
