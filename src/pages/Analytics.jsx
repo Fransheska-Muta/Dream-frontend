@@ -1,66 +1,40 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  Chart as ChartJS,
-  ArcElement,
-  Tooltip,
-  Legend,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-} from "chart.js";
+import Navbar from "../components/Navbar";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement} from "chart.js";
 import { Pie, Bar } from "react-chartjs-2";
 import "../styling/Analytics.css";
 
 // Register Chart.js components
-ChartJS.register(
-  ArcElement,
-  Tooltip,
-  Legend,
-  CategoryScale,
-  LinearScale,
-  BarElement
-);
+ChartJS.register( ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement)
 
 function Analytics() {
   const navigate = useNavigate();
-
   const [analytics, setAnalytics] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  // =========================
-  // GET ANALYTICS
-  // =========================
-
+// getting analytics
   useEffect(() => {
     let ignore = false;
-
     const loadAnalytics = async () => {
       try {
         const auth = sessionStorage.getItem("auth");
-
         if (!auth) {
           navigate("/");
-          return;
+          return
         }
 
-        const response = await fetch(
-          "http://localhost:3000/analytics",
-          {
+        const response = await fetch("http://localhost:3000/analytics",{
             method: "GET",
             headers: {
-              Authorization: auth,
-            },
+              Authorization: auth
+            }
           }
-        );
-
+        )
         const data = await response.json();
-
         if (!response.ok) {
-          throw new Error(
-            data.message || "Unable to load analytics"
-          );
+          throw new Error(data.message || "Unable to load analytics")
         }
 
         if (!ignore) {
@@ -69,15 +43,10 @@ function Analytics() {
         }
 
       } catch (error) {
-        console.error(
-          "Error loading analytics:",
-          error
-        );
+        console.error( "Error loading analytics:", error)
 
         if (!ignore) {
-          setError(
-            "Unable to load your analytics."
-          );
+          setError("Unable to load your analytics.")
         }
 
       } finally {
@@ -96,10 +65,7 @@ function Analytics() {
   }, [navigate]);
 
 
-  // =========================
-  // LOADING
-  // =========================
-
+// loading state
   if (loading) {
     return (
       <div className="analytics-page">
@@ -115,11 +81,6 @@ function Analytics() {
       </div>
     );
   }
-
-
-  // =========================
-  // ERROR
-  // =========================
 
   if (error) {
     return (
@@ -148,78 +109,32 @@ function Analytics() {
   }
 
 
-  // =========================
-  // DATA
-  // =========================
 
   const moods = analytics?.moods || {};
   const themes = analytics?.themes || {};
   const symbols = analytics?.symbols || {};
-
   const moodLabels = Object.keys(moods);
   const moodValues = Object.values(moods);
-
   const themeLabels = Object.keys(themes);
   const themeValues = Object.values(themes);
-
   const symbolLabels = Object.keys(symbols);
   const symbolValues = Object.values(symbols);
-
-
-  // =========================
-  // MOST COMMON
-  // =========================
-
-  const mostCommonMood =
-    moodLabels.length > 0
-      ? moodLabels.reduce((a, b) =>
-          moods[a] > moods[b] ? a : b
-        )
-      : "None";
-
-  const mostCommonTheme =
-    themeLabels.length > 0
-      ? themeLabels.reduce((a, b) =>
-          themes[a] > themes[b] ? a : b
-        )
-      : "None";
-
-  const mostCommonSymbol =
-    symbolLabels.length > 0
-      ? symbolLabels.reduce((a, b) =>
-          symbols[a] > symbols[b] ? a : b
-        )
-      : "None";
-
-
-  // =========================
-  // MOOD PIE CHART
-  // =========================
-
+  const mostCommonMood = moodLabels.length > 0? moodLabels.reduce((a, b) =>moods[a] > moods[b] ? a : b): "None";
+  const mostCommonTheme =themeLabels.length > 0? themeLabels.reduce((a, b) =>themes[a] > themes[b] ? a : b): "None";
+  const mostCommonSymbol = symbolLabels.length > 0? symbolLabels.reduce((a, b) =>symbols[a] > symbols[b] ? a : b): "None";
+// mood pie chart
   const moodChartData = {
     labels: moodLabels,
     datasets: [
       {
         label: "Dreams by Mood",
         data: moodValues,
-        backgroundColor: [
-          "#8b6fa8",
-          "#b58fc7",
-          "#6f547f",
-          "#c7a8d8",
-          "#594365",
-          "#9c82b5",
-        ],
+        backgroundColor: [ "#8b6fa8", "#b58fc7", "#6f547f", "#c7a8d8", "#594365", "#9c82b5",],
         borderColor: "#211b29",
         borderWidth: 2,
       },
     ],
   };
-
-
-  // =========================
-  // THEMES BAR CHART
-  // =========================
 
   const themeChartData = {
     labels: themeLabels,
@@ -239,13 +154,11 @@ function Analytics() {
   const themeChartOptions = {
     responsive: true,
     maintainAspectRatio: false,
-
     plugins: {
       legend: {
         display: false,
       },
     },
-
     scales: {
       x: {
         ticks: {
@@ -270,10 +183,7 @@ function Analytics() {
   };
 
 
-  // =========================
-  // SYMBOLS BAR CHART
-  // =========================
-
+// symbole pie chart
   const symbolChartData = {
     labels: symbolLabels,
     datasets: [
@@ -292,13 +202,11 @@ function Analytics() {
   const symbolChartOptions = {
     responsive: true,
     maintainAspectRatio: false,
-
     plugins: {
       legend: {
         display: false,
       },
     },
-
     scales: {
       x: {
         ticks: {
@@ -325,117 +233,51 @@ function Analytics() {
 
   return (
     <div className="analytics-page">
-
-      {/* =========================
-          HEADER
-      ========================= */}
-
       <header className="analytics-header">
-
         <h1>Dream Journal</h1>
-
-        <button
-          className="back-journal-button"
-          onClick={() => navigate("/journal")}
-        >
+        <button className="back-journal-button" onClick={() => navigate("/journal")}>
           My Journal
         </button>
-
       </header>
 
-
-      {/* =========================
-          MAIN
-      ========================= */}
-
       <main className="analytics-container">
-
         <h2>Dream Analytics</h2>
-
-        <p className="analytics-intro">
-          Discover patterns and recurring themes
-          across your dreams.
-        </p>
-
-
-        {/* =========================
-            SUMMARY CARDS
-        ========================= */}
-
+        <p className="analytics-intro"> Discover patterns and recurring themes from your dreams.</p>
         <section className="analytics-summary">
-
           <div className="analytics-card">
 
             <h3>Total Dreams</h3>
 
-            <p className="analytics-number">
-              {analytics.totalDreams}
-            </p>
-
+            <p className="analytics-number"> {analytics.totalDreams}</p>
           </div>
 
-
           <div className="analytics-card">
-
             <h3>Most Common Mood</h3>
-
-            <p className="analytics-highlight">
-              {mostCommonMood}
-            </p>
-
+            <p className="analytics-highlight">{mostCommonMood}</p>
           </div>
-
 
           <div className="analytics-card">
-
             <h3>Top Theme</h3>
-
-            <p className="analytics-highlight">
-              {mostCommonTheme}
-            </p>
-
+            <p className="analytics-highlight">{mostCommonTheme}</p>
           </div>
-
-
           <div className="analytics-card">
 
             <h3>Top Symbol</h3>
-
-            <p className="analytics-highlight">
-              {mostCommonSymbol}
-            </p>
-
+            <p className="analytics-highlight">{mostCommonSymbol}</p>
           </div>
-
         </section>
 
-
-        {/* =========================
-            CHARTS
-        ========================= */}
-
         <section className="analytics-charts">
-
-          {/* MOODS */}
-
           <div className="chart-card">
-
             <h3>Moods</h3>
-
             {moodLabels.length > 0 ? (
-
               <div className="pie-chart-container">
-
-                <Pie
-                  data={moodChartData}
-                  options={{
+                <Pie data={moodChartData} options={{
                     responsive: true,
                     maintainAspectRatio: false,
-
                     plugins: {
                       legend: {
                         position: "bottom",
-
                         labels: {
                           color: "#d8cce0",
                           padding: 15,
@@ -444,81 +286,36 @@ function Analytics() {
                     },
                   }}
                 />
-
               </div>
-
             ) : (
-
-              <p className="no-data">
-                No mood data yet.
-              </p>
-
+              <p className="no-data">No mood data yet.</p>
             )}
-
           </div>
-
-
-          {/* THEMES */}
-
           <div className="chart-card">
-
             <h3>Recurring Themes</h3>
-
             {themeLabels.length > 0 ? (
-
               <div className="bar-chart-container">
-
-                <Bar
-                  data={themeChartData}
-                  options={themeChartOptions}
-                />
-
+                <Bar data={themeChartData} options={themeChartOptions}/>
               </div>
-
             ) : (
 
-              <p className="no-data">
-                No theme data yet.
-              </p>
-
+              <p className="no-data"> No theme data yet.</p>
             )}
-
           </div>
-
-
-          {/* SYMBOLS */}
-
           <div className="chart-card full-chart">
-
             <h3>Recurring Symbols</h3>
-
             {symbolLabels.length > 0 ? (
-
               <div className="bar-chart-container">
-
-                <Bar
-                  data={symbolChartData}
-                  options={symbolChartOptions}
-                />
-
+                <Bar data={symbolChartData} options={symbolChartOptions}/>
               </div>
-
             ) : (
-
-              <p className="no-data">
-                No symbol data yet.
-              </p>
-
+              <p className="no-data">No symbol data yet.</p>
             )}
-
           </div>
-
         </section>
-
       </main>
-
+      <Navbar />
     </div>
-  );
+  )
 }
-
 export default Analytics
